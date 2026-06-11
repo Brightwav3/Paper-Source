@@ -10,6 +10,7 @@
   --radius-s: calc(var(--cc-radius) - 3px);
   --radius-m: var(--cc-radius);
   --radius-l: calc(var(--cc-radius) + 3px);
+  --caret-color: var(--cc-coral);
 }
 
 .theme-light {
@@ -164,24 +165,24 @@ body {
   hyphens: auto;
 }
 .internal-link,
-.cm-hmd-internal-link,
-.markdown-rendered a {
+.cm-hmd-internal-link {
   color: var(--cc-accent);
-  text-decoration: underline;
-  text-decoration-color: var(--cc-paper-underline);
-  text-underline-offset: 3px;
+  text-decoration: none;
+  border-bottom: 1px solid var(--cc-paper-underline);
 }
 
 /* Bold & Italic colored orange */
 .markdown-rendered strong,
 .markdown-rendered b,
+.markdown-preview-view strong,
 .cm-s-obsidian .cm-strong {
-  color: var(--cc-paper-bold) !important;
+  color: var(--cc-paper-bold);
 }
 .markdown-rendered em,
 .markdown-rendered i,
+.markdown-preview-view em,
 .cm-s-obsidian .cm-em {
-  color: var(--cc-paper-italic) !important;
+  color: var(--cc-paper-italic);
 }
 
 /* --------------------------------------------------------------------------
@@ -279,7 +280,6 @@ body { --nav-indentation-guide-color: transparent; }
   border-radius: var(--radius-m);
 }
 
-.cm-cursor, .cm-cursor-primary { border-left: 2px solid var(--cc-coral) !important; }
 
 .cm-s-obsidian .cm-link,
 .cm-s-obsidian .cm-url,

@@ -4,7 +4,7 @@
 
 Paper Source pairs **Source Code Pro** monospace typography with a calm, paper-like surface and a color-coded green heading ladder. Bold and italic text glow in warm orange, backlinks are underlined in tan, and the dark mode leans on Monokai-inspired surfaces with crisp mint text.
 
-![Paper Source — dark mode](PaperSourceDark.png)
+![Paper Source — dark mode](screenshot.png)
 
 ![Version](https://img.shields.io/badge/version-1.0.0-d39a67)
 ![Obsidian](https://img.shields.io/badge/Obsidian-1.0.0%2B-7c3aed)
