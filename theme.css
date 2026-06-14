@@ -380,3 +380,37 @@ input[type="checkbox"]:checked { background-color: var(--cc-coral); border-color
   background: #a6e22e;
   border-color: #a6e22e;
 }
+
+/* Graph (light): lines original-neutral but a bit darker, node labels use the
+   normal text color (the default --graph-text is a washed-out gray). */
+.theme-light {
+  --graph-line: rgba(var(--mono-rgb-100), 0.22);
+  --graph-text: var(--text-normal);
+}
+/* extended-graph reads the node-label color from the computed `color` of a probe
+   div `.graph-view.color-text` (it ignores --graph-text), so force it directly. */
+.theme-light .graph-view.color-text {
+  color: var(--text-normal);
+}
+
+/* Light-mode chrome contrast — on the pale mint surface the default chrome reads
+   too faint, so darken ribbon icons, tab headers, nav rows and file dots. */
+.theme-light .side-dock-ribbon-action {
+  color: #4a6b4e;
+}
+.theme-light .workspace-tab-header {
+  color: #5e7a62;
+}
+.theme-light .nav-file-title,
+.theme-light .nav-folder-title {
+  color: #44664a;
+}
+.theme-light .nav-folder-title {
+  font-weight: 600;
+}
+.theme-light .nav-file-title-content::before {
+  border-color: #7d9682;
+}
+.theme-light .clickable-icon {
+  color: #5e7a62;
+}

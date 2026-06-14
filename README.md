@@ -6,7 +6,7 @@ Paper Source pairs **Source Code Pro** monospace typography with a calm, paper-l
 
 ![Paper Source — dark mode](screenshot.png)
 
-![Version](https://img.shields.io/badge/version-1.0.0-d39a67)
+![Version](https://img.shields.io/badge/version-1.2.0-d39a67)
 ![Obsidian](https://img.shields.io/badge/Obsidian-1.0.0%2B-7c3aed)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
