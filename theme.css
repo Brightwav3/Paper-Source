@@ -4,25 +4,43 @@
    Paper Source — standalone Obsidian theme
    ========================================================================== */
 
+/* @settings
+
+name: Paper Source
+id: paper-source
+settings:
+    -
+        id: cc-accent-hue
+        title: Accent hue
+        description: Rotate the accent color around the wheel. Brightness and saturation stay fixed — only the hue moves, so the paper vibe is preserved.
+        type: variable-number-slider
+        default: 29
+        min: 0
+        max: 360
+        step: 1
+        format: '°'
+*/
+
 .theme-light,
 .theme-dark {
   --cc-radius: 9px;
   --radius-s: calc(var(--cc-radius) - 3px);
   --radius-m: var(--cc-radius);
   --radius-l: calc(var(--cc-radius) + 3px);
+  --cc-accent-hue: 29;
   --caret-color: var(--cc-coral);
 }
 
 .theme-light {
-  --cc-accent: #d39a67;                  /* backlink */
-  --accent-h: 29; --accent-s: 58%; --accent-l: 61%;
+  --cc-accent: hsl(var(--cc-accent-hue), 58%, 61%);   /* backlink */
+  --accent-h: var(--cc-accent-hue); --accent-s: 58%; --accent-l: 61%;
 
   --cc-coral:       var(--cc-accent);
-  --cc-coral-hover: #bd8650;
-  --cc-coral-soft:  #d39a672e;
-  --cc-paper-underline: #b37b40;         /* backlink underline */
-  --cc-paper-italic: #c86f2b;
-  --cc-paper-bold: #c86f2b;
+  --cc-coral-hover: hsl(var(--cc-accent-hue), 43%, 53%);
+  --cc-coral-soft:  hsla(var(--cc-accent-hue), 58%, 61%, 0.18);
+  --cc-paper-underline: hsl(var(--cc-accent-hue), 48%, 48%);  /* backlink underline */
+  --cc-paper-italic: hsl(var(--cc-accent-hue), 65%, 48%);
+  --cc-paper-bold: hsl(var(--cc-accent-hue), 65%, 48%);
 
   --background-primary:        #eef8f0;
   --background-primary-alt:    #e8f4ea;
@@ -39,7 +57,7 @@
   --text-faint:  #93a896;
   --text-on-accent: #ffffff;
   --text-accent: var(--cc-accent);
-  --text-selection: #d39a6740;
+  --text-selection: hsla(var(--cc-accent-hue), 58%, 61%, 0.25);
 
   --interactive-accent:       var(--cc-accent);
   --interactive-accent-hover: var(--cc-coral-hover);
@@ -62,8 +80,8 @@
   --blockquote-border-color: #cfe1d3;
   --hr-color:                #cfe1d3;
   --checkbox-color:          var(--cc-accent);
-  --tag-background:          #d39a672e;
-  --tag-color:               #8a5e30;
+  --tag-background:          hsla(var(--cc-accent-hue), 58%, 61%, 0.18);
+  --tag-color:               hsl(var(--cc-accent-hue), 48%, 36%);
   --list-marker-color:       #93a896;
 
   --scrollbar-thumb-bg:        #37553a26;
@@ -73,15 +91,15 @@
 }
 
 .theme-dark {
-  --cc-accent: #d39a67;                  /* backlink */
-  --accent-h: 29; --accent-s: 58%; --accent-l: 61%;
+  --cc-accent: hsl(var(--cc-accent-hue), 58%, 61%);   /* backlink */
+  --accent-h: var(--cc-accent-hue); --accent-s: 58%; --accent-l: 61%;
 
   --cc-coral:       var(--cc-accent);
-  --cc-coral-hover: #bd8650;
-  --cc-coral-soft:  #d39a672e;
-  --cc-paper-underline: #b37b40;         /* backlink underline */
-  --cc-paper-italic: #d39a67;
-  --cc-paper-bold: #d39a67;
+  --cc-coral-hover: hsl(var(--cc-accent-hue), 43%, 53%);
+  --cc-coral-soft:  hsla(var(--cc-accent-hue), 58%, 61%, 0.18);
+  --cc-paper-underline: hsl(var(--cc-accent-hue), 48%, 48%);  /* backlink underline */
+  --cc-paper-italic: hsl(var(--cc-accent-hue), 58%, 61%);
+  --cc-paper-bold: hsl(var(--cc-accent-hue), 58%, 61%);
 
   --background-primary:        #272822;
   --background-primary-alt:    #2f302a;
@@ -99,7 +117,7 @@
   --text-faint:  #8aa68f;
   --text-on-accent: #ffffff;
   --text-accent: var(--cc-accent);
-  --text-selection: #d39a6740;
+  --text-selection: hsla(var(--cc-accent-hue), 58%, 61%, 0.25);
 
   --interactive-accent:       var(--cc-accent);
   --interactive-accent-hover: var(--cc-coral-hover);
@@ -122,8 +140,8 @@
   --blockquote-border-color: #49483e;
   --hr-color:                #49483e;
   --checkbox-color:          var(--cc-accent);
-  --tag-background:          #d39a672e;
-  --tag-color:               #e3c4a0;
+  --tag-background:          hsla(var(--cc-accent-hue), 58%, 61%, 0.18);
+  --tag-color:               hsl(var(--cc-accent-hue), 50%, 76%);
   --list-marker-color:       #8aa68f;
 
   --scrollbar-thumb-bg:        #eef8f021;
@@ -414,3 +432,235 @@ input[type="checkbox"]:checked { background-color: var(--cc-coral); border-color
 .theme-light .clickable-icon {
   color: #5e7a62;
 }
+
+/* ==========================================================================
+   Added surfaces — callouts, syntax, properties, marks, canvas, tasks,
+   tables, footnotes, search, tooltips
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Theme tokens for the added surfaces
+   -------------------------------------------------------------------------- */
+.theme-light {
+  --cc-highlight: #f0d9a8;
+
+  --callout-quote: 211, 154, 103;
+  --callout-note:  79, 125, 88;
+
+  --text-highlight-bg: var(--cc-coral-soft);
+
+  --canvas-background:  var(--background-secondary);
+  --canvas-dot-pattern: #cfe1d3;
+
+  --cc-syn-keyword:  #b0305a;
+  --cc-syn-string:   #8a7320;
+  --cc-syn-number:   #7a52b8;
+  --cc-syn-function: #3f7d2a;
+  --cc-syn-class:    #1f7a8c;
+  --cc-syn-builtin:  #b06b2e;
+  --cc-syn-comment:  #93a896;
+  --cc-syn-punct:    #37553a;
+}
+
+.theme-dark {
+  --cc-highlight: #d39a6740;
+
+  --callout-quote: 211, 154, 103;
+  --callout-note:  118, 204, 128;
+
+  --text-highlight-bg: var(--cc-coral-soft);
+
+  --canvas-background:  var(--background-secondary);
+  --canvas-dot-pattern: #3a3b32;
+
+  --cc-syn-keyword:  #f92672;
+  --cc-syn-string:   #e6db74;
+  --cc-syn-number:   #ae81ff;
+  --cc-syn-function: #a6e22e;
+  --cc-syn-class:    #66d9ef;
+  --cc-syn-builtin:  #fd971f;
+  --cc-syn-comment:  #75715e;
+  --cc-syn-punct:    #f8f8f2;
+}
+
+/* --------------------------------------------------------------------------
+   Callouts
+   -------------------------------------------------------------------------- */
+.callout {
+  border-radius: var(--radius-m);
+  border: 1px solid var(--background-modifier-border);
+  background: var(--background-primary-alt);
+  padding: 0;
+  mix-blend-mode: normal;
+  overflow: hidden;
+}
+.callout-title {
+  padding: 0.55em 0.85em;
+  gap: 0.5em;
+  background: rgba(var(--callout-color), 0.08);
+  align-items: center;
+}
+.callout-title-inner { font-weight: 600; }
+.callout-content { padding: 0.1em 0.85em 0.6em; }
+.callout[data-callout="quote"] .callout-content,
+.callout[data-callout="cite"] .callout-content { font-style: italic; color: var(--text-muted); }
+
+/* --------------------------------------------------------------------------
+   Highlight (==mark==)
+   -------------------------------------------------------------------------- */
+.markdown-rendered mark,
+.cm-s-obsidian .cm-highlight {
+  background: var(--cc-highlight);
+  color: inherit;
+  border-radius: var(--radius-s);
+  padding: 0.02em 0.28em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* --------------------------------------------------------------------------
+   Properties / frontmatter panel
+   -------------------------------------------------------------------------- */
+.metadata-container {
+  border-radius: var(--radius-m);
+  background: var(--background-primary-alt);
+  border: 1px solid var(--background-modifier-border);
+  padding: 6px 10px;
+  margin-bottom: 1.2em;
+}
+.metadata-property { border-radius: var(--radius-s); }
+.metadata-property:hover { background: var(--background-modifier-hover); }
+.metadata-property-key-input { color: var(--text-muted); font-weight: 600; }
+.metadata-property-icon { color: var(--text-faint); }
+.metadata-add-button { color: var(--cc-coral); }
+
+/* --------------------------------------------------------------------------
+   Syntax highlighting — editor (CodeMirror) + reading view (Prism)
+   -------------------------------------------------------------------------- */
+.cm-s-obsidian .cm-keyword,
+.cm-s-obsidian .cm-operator,
+.cm-s-obsidian .cm-tag,
+.markdown-rendered .token.keyword,
+.markdown-rendered .token.operator,
+.markdown-rendered .token.tag,
+.markdown-rendered .token.selector { color: var(--cc-syn-keyword); }
+
+.cm-s-obsidian .cm-string,
+.cm-s-obsidian .cm-string-2,
+.markdown-rendered .token.string,
+.markdown-rendered .token.char,
+.markdown-rendered .token.attr-value,
+.markdown-rendered .token.regex { color: var(--cc-syn-string); }
+
+.cm-s-obsidian .cm-number,
+.cm-s-obsidian .cm-atom,
+.markdown-rendered .token.number,
+.markdown-rendered .token.boolean,
+.markdown-rendered .token.constant,
+.markdown-rendered .token.symbol { color: var(--cc-syn-number); }
+
+.cm-s-obsidian .cm-def,
+.markdown-rendered .token.function { color: var(--cc-syn-function); }
+
+.cm-s-obsidian .cm-type,
+.markdown-rendered .token.class-name { color: var(--cc-syn-class); font-style: italic; }
+
+.cm-s-obsidian .cm-builtin,
+.cm-s-obsidian .cm-attribute,
+.cm-s-obsidian .cm-property,
+.markdown-rendered .token.builtin,
+.markdown-rendered .token.important,
+.markdown-rendered .token.attr-name,
+.markdown-rendered .token.property { color: var(--cc-syn-builtin); }
+
+.cm-s-obsidian .cm-comment,
+.cm-s-obsidian .cm-meta,
+.markdown-rendered .token.comment,
+.markdown-rendered .token.prolog,
+.markdown-rendered .token.doctype,
+.markdown-rendered .token.cdata { color: var(--cc-syn-comment); font-style: italic; }
+
+.markdown-rendered .token.punctuation { color: var(--cc-syn-punct); }
+
+/* --------------------------------------------------------------------------
+   Canvas
+   -------------------------------------------------------------------------- */
+.canvas-node .canvas-node-container,
+.canvas-node-content { border-radius: var(--radius-m); }
+.canvas-node .canvas-node-container {
+  border: 1px solid var(--background-modifier-border);
+  box-shadow: none;
+}
+.canvas-node.is-focused .canvas-node-container { border-color: var(--cc-coral); }
+.canvas-node-label {
+  background: var(--background-secondary);
+  color: var(--text-muted);
+  border-radius: var(--radius-s);
+}
+
+/* --------------------------------------------------------------------------
+   Custom checkbox states
+   -------------------------------------------------------------------------- */
+.task-list-item[data-task="-"] .task-list-item-checkbox {
+  background-color: var(--text-faint);
+  border-color: var(--text-faint);
+}
+.task-list-item[data-task="-"] { color: var(--text-muted); text-decoration: line-through; }
+
+.task-list-item[data-task=">"] .task-list-item-checkbox,
+.task-list-item[data-task="<"] .task-list-item-checkbox { border-color: var(--cc-coral); }
+
+.task-list-item[data-task="?"] .task-list-item-checkbox { border-color: #c89a3a; }
+.task-list-item[data-task="!"] .task-list-item-checkbox { border-color: #c0552a; }
+.task-list-item[data-task="*"] .task-list-item-checkbox { border-color: var(--cc-syn-number); }
+
+/* --------------------------------------------------------------------------
+   Tables — header background + zebra striping
+   -------------------------------------------------------------------------- */
+.markdown-rendered thead th { background: var(--background-secondary); }
+.markdown-rendered tbody tr:nth-child(even) td {
+  background: color-mix(in oklab, var(--text-normal) 3%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   Footnotes
+   -------------------------------------------------------------------------- */
+.footnotes {
+  font-size: 0.88em;
+  color: var(--text-muted);
+  border-top: 1px solid var(--hr-color);
+  margin-top: 2em;
+  padding-top: 0.6em;
+}
+sup.footnote-ref a,
+.footnote-backref { color: var(--cc-coral); text-decoration: none; }
+.popover.footnote-popover {
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
+}
+
+/* --------------------------------------------------------------------------
+   Search results highlight
+   -------------------------------------------------------------------------- */
+.search-result-file-matched-text {
+  background: var(--cc-coral-soft);
+  color: var(--text-normal);
+  border-radius: var(--radius-s);
+}
+.search-result-file-title { font-weight: 600; }
+.search-result-file-title:hover { color: var(--cc-coral); }
+
+/* --------------------------------------------------------------------------
+   Tooltips
+   -------------------------------------------------------------------------- */
+.tooltip {
+  background: var(--background-secondary);
+  color: var(--text-normal);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-s);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  font-size: 0.82em;
+  font-weight: 500;
+}
+.tooltip .tooltip-arrow { display: none; }

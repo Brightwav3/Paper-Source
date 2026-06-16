@@ -4,6 +4,28 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.3.0] - 2026-06-16
+
+### Added
+- **Style Settings support** — an "Accent hue" slider that rotates the accent
+  color around the wheel while keeping saturation and lightness fixed, so the
+  paper vibe is preserved. The whole accent family (backlinks, bold/italic,
+  tags, selection, hovers) is now derived from a single `--cc-accent-hue`
+  variable via `hsl()`.
+- Callout styling aligned to the palette: rounded container, tinted titles,
+  italic quote/cite.
+- Syntax highlighting for code blocks in both the editor and reading view —
+  full Monokai palette in dark mode, a muted paper palette in light mode.
+- Properties / frontmatter panel styling.
+- `==Highlight==` (mark) styling.
+- Canvas: palette-matched node containers, focus accent, labels, and background
+  dot pattern.
+- Custom checkbox states (`-`, `>`, `<`, `?`, `!`, `*`).
+- Table header background and zebra striping.
+- Footnotes section and footnote popover styling.
+- Search-result match highlighting in the accent color.
+- Tooltip styling matched to the paper surface.
+
 ## [1.2.0] - 2026-06-14
 
 ### Added
