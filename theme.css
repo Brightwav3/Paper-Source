@@ -10,142 +10,299 @@ name: Paper Source
 id: paper-source
 settings:
     -
-        id: cc-accent-hue
-        title: Accent hue
-        description: Rotate the accent color around the wheel. Brightness and saturation stay fixed — only the hue moves, so the paper vibe is preserved.
+        id: ps-theme-head
+        title: Theme color
+        type: heading
+        level: 2
+        collapsed: false
+    -
+        id: cc-base-hue
+        title: Background tint hue
+        description: Rotate the whole paper palette around the wheel — backgrounds, text and headings shift together, so the default green can become pink, purple, blue, and so on. Lightness and saturation stay fixed, so the vibe is preserved. The tan accent is left untouched.
         type: variable-number-slider
-        default: 29
+        default: 132
         min: 0
         max: 360
         step: 1
-        format: '°'
+    -
+        id: ps-layout-head
+        title: Layout & typography
+        type: heading
+        level: 2
+        collapsed: true
+    -
+        id: cc-radius
+        title: Corner radius
+        description: Roundness of cards, buttons, tabs and inputs.
+        type: variable-number-slider
+        default: 9
+        min: 0
+        max: 18
+        step: 1
+        format: px
+    -
+        id: cc-font-size
+        title: Body font size
+        type: variable-number-slider
+        default: 16
+        min: 13
+        max: 22
+        step: 1
+        format: px
+    -
+        id: cc-line-height
+        title: Line height
+        type: variable-number-slider
+        default: 1.6
+        min: 1.2
+        max: 2
+        step: 0.05
+    -
+        id: cc-reading-width
+        title: Reading line width
+        description: Maximum text width, in characters.
+        type: variable-number-slider
+        default: 72
+        min: 50
+        max: 110
+        step: 1
+        format: ch
+    -
+        id: cc-plain-emphasis
+        title: Plain bold & italic
+        description: Turn off the orange tint on bold and italic text.
+        type: class-toggle
+        default: false
+    -
+        id: cc-no-justify
+        title: Left-aligned body text
+        description: Disable justified paragraphs in reading view.
+        type: class-toggle
+        default: false
+    -
+        id: ps-graph-light-head
+        title: Graph colors — Light mode
+        type: heading
+        level: 2
+        collapsed: true
+    -
+        id: cc-graph-node-light
+        title: Node color
+        type: variable-color
+        format: hex
+        default: '#5e7a62'
+    -
+        id: cc-graph-line-light
+        title: Link color
+        type: variable-color
+        opacity: true
+        format: hex
+        default: '#5e7a6259'
+    -
+        id: cc-graph-tag-light
+        title: Tagged node color
+        type: variable-color
+        format: hex
+        default: '#d39a67'
+    -
+        id: cc-graph-unresolved-light
+        title: Unresolved node color
+        type: variable-color
+        format: hex
+        default: '#b9c8bc'
+    -
+        id: ps-graph-dark-head
+        title: Graph colors — Dark mode
+        type: heading
+        level: 2
+        collapsed: true
+    -
+        id: cc-graph-node-dark
+        title: Node color
+        type: variable-color
+        format: hex
+        default: '#bdd3c0'
+    -
+        id: cc-graph-line-dark
+        title: Link color
+        type: variable-color
+        opacity: true
+        format: hex
+        default: '#8aa68f4d'
+    -
+        id: cc-graph-tag-dark
+        title: Tagged node color
+        type: variable-color
+        format: hex
+        default: '#a6e22e'
+    -
+        id: cc-graph-unresolved-dark
+        title: Unresolved node color
+        type: variable-color
+        format: hex
+        default: '#6f7a70'
 */
+
+/* Style Settings masters — declared at body scope (low specificity) so the
+   Style Settings plugin can override them. Everything else derives from these. */
+body {
+  --cc-base-hue: 132;
+
+  --cc-radius: 9;
+  --cc-font-size: 16;
+  --cc-line-height: 1.6;
+  --cc-reading-width: 72;
+
+  /* Graph colors — settable per mode in Style Settings, mapped in the
+     theme blocks below. */
+  --cc-graph-node-light:       #5e7a62;
+  --cc-graph-line-light:       #5e7a6259;
+  --cc-graph-tag-light:        #d39a67;
+  --cc-graph-unresolved-light: #b9c8bc;
+  --cc-graph-node-dark:        #bdd3c0;
+  --cc-graph-line-dark:        #8aa68f4d;
+  --cc-graph-tag-dark:         #a6e22e;  /* Monokai green */
+  --cc-graph-unresolved-dark:  #6f7a70;
+}
 
 .theme-light,
 .theme-dark {
-  --cc-radius: 9px;
-  --radius-s: calc(var(--cc-radius) - 3px);
-  --radius-m: var(--cc-radius);
-  --radius-l: calc(var(--cc-radius) + 3px);
-  --cc-accent-hue: 29;
+  --radius-s: calc(var(--cc-radius) * 1px - 3px);
+  --radius-m: calc(var(--cc-radius) * 1px);
+  --radius-l: calc(var(--cc-radius) * 1px + 3px);
   --caret-color: var(--cc-coral);
 }
 
 .theme-light {
-  --cc-accent: hsl(var(--cc-accent-hue), 58%, 61%);   /* backlink */
-  --accent-h: var(--cc-accent-hue); --accent-s: 58%; --accent-l: 61%;
+  --cc-accent: #d39a67;                  /* tan accent — fixed, not driven by the hue slider */
+  --accent-h: 29; --accent-s: 58%; --accent-l: 61%;
 
   --cc-coral:       var(--cc-accent);
-  --cc-coral-hover: hsl(var(--cc-accent-hue), 43%, 53%);
-  --cc-coral-soft:  hsla(var(--cc-accent-hue), 58%, 61%, 0.18);
-  --cc-paper-underline: hsl(var(--cc-accent-hue), 48%, 48%);  /* backlink underline */
-  --cc-paper-italic: hsl(var(--cc-accent-hue), 65%, 48%);
-  --cc-paper-bold: hsl(var(--cc-accent-hue), 65%, 48%);
+  --cc-coral-hover: #bd8650;
+  --cc-coral-soft:  #d39a672e;
+  --cc-paper-underline: #b37b40;         /* backlink underline */
+  --cc-paper-italic: #c86f2b;
+  --cc-paper-bold: #c86f2b;
 
-  --background-primary:        #eef8f0;
-  --background-primary-alt:    #e8f4ea;
-  --background-secondary:      #e4f1e7;
-  --background-secondary-alt:  #dcecdf;
+  --graph-line:            var(--cc-graph-line-light);
+  --graph-node:            var(--cc-graph-node-light);
+  --graph-node-tag:        var(--cc-graph-tag-light);
+  --graph-node-unresolved: var(--cc-graph-unresolved-light);
+  --graph-node-focused:    var(--cc-accent);
 
-  --background-modifier-border:       #cfe1d3;
-  --background-modifier-border-hover: #bcd4c1;
-  --background-modifier-hover:        #37553a14;
-  --background-modifier-form-field:   #f6fbf7;
+  /* Paper surface — hue follows the Background tint slider, S/L fixed. */
+  --background-primary:        hsl(var(--cc-base-hue), 42%, 95%);
+  --background-primary-alt:    hsl(var(--cc-base-hue), 35%, 93%);
+  --background-secondary:      hsl(var(--cc-base-hue), 32%, 92%);
+  --background-secondary-alt:  hsl(var(--cc-base-hue), 30%, 88%);
 
-  --text-normal: #37553a;
-  --text-muted:  #5e7a62;
-  --text-faint:  #93a896;
+  --background-modifier-border:       hsl(var(--cc-base-hue), 23%, 85%);
+  --background-modifier-border-hover: hsl(var(--cc-base-hue), 22%, 78%);
+  --background-modifier-hover:        hsla(var(--cc-base-hue), 21%, 27%, 0.08);
+  --background-modifier-form-field:   hsl(var(--cc-base-hue), 39%, 98%);
+
+  --text-normal: hsl(var(--cc-base-hue), 21%, 27%);
+  --text-muted:  hsl(var(--cc-base-hue), 13%, 42%);
+  --text-faint:  hsl(var(--cc-base-hue), 11%, 62%);
   --text-on-accent: #ffffff;
   --text-accent: var(--cc-accent);
-  --text-selection: hsla(var(--cc-accent-hue), 58%, 61%, 0.25);
+  --text-selection: #d39a6740;
 
   --interactive-accent:       var(--cc-accent);
   --interactive-accent-hover: var(--cc-coral-hover);
 
-  --titlebar-background:         #e4f1e7;
-  --titlebar-background-focused: #e8f4ea;
-  --tab-background-active:       #eef8f0;
+  --titlebar-background:         hsl(var(--cc-base-hue), 32%, 92%);
+  --titlebar-background-focused: hsl(var(--cc-base-hue), 35%, 93%);
+  --tab-background-active:       hsl(var(--cc-base-hue), 42%, 95%);
 
-  --h1-color: #143d22;
-  --h2-color: #1c5230;
-  --h3-color: #24683e;
-  --h4-color: #2d7e4d;
-  --h5-color: #36945c;
-  --h6-color: #3faa6a;
-  --inline-title-color: #143d22;
+  --h1-color: hsl(calc(var(--cc-base-hue) + 10), 51%, 16%);
+  --h2-color: hsl(calc(var(--cc-base-hue) + 10), 49%, 22%);
+  --h3-color: hsl(calc(var(--cc-base-hue) + 10), 49%, 27%);
+  --h4-color: hsl(calc(var(--cc-base-hue) + 10), 47%, 34%);
+  --h5-color: hsl(calc(var(--cc-base-hue) + 10), 47%, 40%);
+  --h6-color: hsl(calc(var(--cc-base-hue) + 10), 46%, 46%);
+  --inline-title-color: hsl(calc(var(--cc-base-hue) + 10), 51%, 16%);
 
-  --code-background: #e4f1e7;
-  --code-normal:     #37553a;
+  --code-background: hsl(var(--cc-base-hue), 32%, 92%);
+  --code-normal:     hsl(var(--cc-base-hue), 21%, 27%);
 
-  --blockquote-border-color: #cfe1d3;
-  --hr-color:                #cfe1d3;
+  --blockquote-border-color: hsl(var(--cc-base-hue), 23%, 85%);
+  --hr-color:                hsl(var(--cc-base-hue), 23%, 85%);
   --checkbox-color:          var(--cc-accent);
-  --tag-background:          hsla(var(--cc-accent-hue), 58%, 61%, 0.18);
-  --tag-color:               hsl(var(--cc-accent-hue), 48%, 36%);
-  --list-marker-color:       #93a896;
+  --tag-background:          #d39a672e;
+  --tag-color:               #8a5e30;
+  --list-marker-color:       hsl(var(--cc-base-hue), 11%, 62%);
 
-  --scrollbar-thumb-bg:        #37553a26;
-  --scrollbar-active-thumb-bg: #37553a40;
-  
-  --table-border-color: #bcd1c0;
+  --scrollbar-thumb-bg:        hsla(var(--cc-base-hue), 21%, 27%, 0.15);
+  --scrollbar-active-thumb-bg: hsla(var(--cc-base-hue), 21%, 27%, 0.25);
+
+  --table-border-color: hsl(var(--cc-base-hue), 18%, 78%);
 }
 
 .theme-dark {
-  --cc-accent: hsl(var(--cc-accent-hue), 58%, 61%);   /* backlink */
-  --accent-h: var(--cc-accent-hue); --accent-s: 58%; --accent-l: 61%;
+  --cc-accent: #d39a67;                  /* tan accent — fixed, not driven by the hue slider */
+  --accent-h: 29; --accent-s: 58%; --accent-l: 61%;
 
   --cc-coral:       var(--cc-accent);
-  --cc-coral-hover: hsl(var(--cc-accent-hue), 43%, 53%);
-  --cc-coral-soft:  hsla(var(--cc-accent-hue), 58%, 61%, 0.18);
-  --cc-paper-underline: hsl(var(--cc-accent-hue), 48%, 48%);  /* backlink underline */
-  --cc-paper-italic: hsl(var(--cc-accent-hue), 58%, 61%);
-  --cc-paper-bold: hsl(var(--cc-accent-hue), 58%, 61%);
+  --cc-coral-hover: #bd8650;
+  --cc-coral-soft:  #d39a672e;
+  --cc-paper-underline: #b37b40;         /* backlink underline */
+  --cc-paper-italic: #d39a67;
+  --cc-paper-bold: #d39a67;
 
-  --background-primary:        #272822;
-  --background-primary-alt:    #2f302a;
-  --background-secondary:      #212219;
-  --background-secondary-alt:  #1b1c15;
+  --graph-line:            var(--cc-graph-line-dark);
+  --graph-node:            var(--cc-graph-node-dark);
+  --graph-node-tag:        var(--cc-graph-tag-dark);
+  --graph-node-unresolved: var(--cc-graph-unresolved-dark);
+  --graph-node-focused:    var(--cc-accent);
 
-  --background-modifier-border:       #49483e;
-  --background-modifier-border-hover: #5f5d50;
-  --background-modifier-hover:        #eef8f012;
-  --background-modifier-form-field:   #21221b;
-  --table-border-color:               #5a594d;
+  /* Monokai-dark surface — hue follows the slider; saturations stay low so
+     dark mode keeps its near-neutral character. */
+  --background-primary:        hsl(var(--cc-base-hue), 8%, 15%);
+  --background-primary-alt:    hsl(var(--cc-base-hue), 7%, 18%);
+  --background-secondary:      hsl(var(--cc-base-hue), 15%, 12%);
+  --background-secondary-alt:  hsl(var(--cc-base-hue), 14%, 10%);
 
-  --text-normal: #eef8f0;
-  --text-muted:  #bdd3c0;
-  --text-faint:  #8aa68f;
+  --background-modifier-border:       hsl(var(--cc-base-hue), 8%, 26%);
+  --background-modifier-border-hover: hsl(var(--cc-base-hue), 9%, 34%);
+  --background-modifier-hover:        hsla(var(--cc-base-hue), 33%, 95%, 0.07);
+  --background-modifier-form-field:   hsl(var(--cc-base-hue), 15%, 12%);
+  --table-border-color:               hsl(var(--cc-base-hue), 8%, 33%);
+
+  --text-normal: hsl(var(--cc-base-hue), 33%, 95%);
+  --text-muted:  hsl(var(--cc-base-hue), 20%, 78%);
+  --text-faint:  hsl(var(--cc-base-hue), 14%, 60%);
   --text-on-accent: #ffffff;
   --text-accent: var(--cc-accent);
-  --text-selection: hsla(var(--cc-accent-hue), 58%, 61%, 0.25);
+  --text-selection: #d39a6740;
 
   --interactive-accent:       var(--cc-accent);
   --interactive-accent-hover: var(--cc-coral-hover);
 
-  --titlebar-background:         #212219;
-  --titlebar-background-focused: #272822;
-  --tab-background-active:       #272822;
+  --titlebar-background:         hsl(var(--cc-base-hue), 15%, 12%);
+  --titlebar-background-focused: hsl(var(--cc-base-hue), 8%, 15%);
+  --tab-background-active:       hsl(var(--cc-base-hue), 8%, 15%);
 
-  --h1-color: #d0eed4;
-  --h2-color: #b2e3b8;
-  --h3-color: #94d89c;
-  --h4-color: #76cc80;
-  --h5-color: #57bf64;
-  --h6-color: #38b348;
-  --inline-title-color: #d0eed4;
+  --h1-color: hsl(var(--cc-base-hue), 47%, 87%);
+  --h2-color: hsl(var(--cc-base-hue), 47%, 79%);
+  --h3-color: hsl(var(--cc-base-hue), 47%, 71%);
+  --h4-color: hsl(var(--cc-base-hue), 46%, 63%);
+  --h5-color: hsl(var(--cc-base-hue), 45%, 55%);
+  --h6-color: hsl(var(--cc-base-hue), 52%, 46%);
+  --inline-title-color: hsl(var(--cc-base-hue), 47%, 87%);
 
-  --code-background: #21221b;
-  --code-normal:     #eef8f0;
+  --code-background: hsl(var(--cc-base-hue), 15%, 12%);
+  --code-normal:     hsl(var(--cc-base-hue), 33%, 95%);
 
-  --blockquote-border-color: #49483e;
-  --hr-color:                #49483e;
+  --blockquote-border-color: hsl(var(--cc-base-hue), 8%, 26%);
+  --hr-color:                hsl(var(--cc-base-hue), 8%, 26%);
   --checkbox-color:          var(--cc-accent);
-  --tag-background:          hsla(var(--cc-accent-hue), 58%, 61%, 0.18);
-  --tag-color:               hsl(var(--cc-accent-hue), 50%, 76%);
-  --list-marker-color:       #8aa68f;
+  --tag-background:          #d39a672e;
+  --tag-color:               #e3c4a0;
+  --list-marker-color:       hsl(var(--cc-base-hue), 14%, 60%);
 
-  --scrollbar-thumb-bg:        #eef8f021;
-  --scrollbar-active-thumb-bg: #eef8f038;
+  --scrollbar-thumb-bg:        hsla(var(--cc-base-hue), 33%, 95%, 0.13);
+  --scrollbar-active-thumb-bg: hsla(var(--cc-base-hue), 33%, 95%, 0.22);
 }
 
 /* --------------------------------------------------------------------------
@@ -156,9 +313,8 @@ body {
   --font-interface-theme: "Source Code Pro", ui-monospace, monospace;
   --font-monospace-theme: "Source Code Pro", ui-monospace, monospace;
 
-  --cc-font-size: 16px;
-  --font-text-size: var(--cc-font-size);
-  --line-height-normal: 1.6;
+  --font-text-size: calc(var(--cc-font-size) * 1px);
+  --line-height-normal: var(--cc-line-height);
 
   --h1-weight: 620;
   --h2-weight: 600;
@@ -167,7 +323,7 @@ body {
 }
 
 .markdown-preview-sizer,
-.markdown-source-view.mod-cm6 .cm-sizer { max-width: 72ch; }
+.markdown-source-view.mod-cm6 .cm-sizer { max-width: calc(var(--cc-reading-width) * 1ch); }
 
 .markdown-preview-view,
 .markdown-source-view .cm-content,
@@ -202,6 +358,19 @@ body {
 .cm-s-obsidian .cm-em {
   color: var(--cc-paper-italic);
 }
+
+/* Style Settings opt-outs */
+body.cc-no-justify .markdown-preview-view p,
+body.cc-no-justify .markdown-rendered p { text-align: left; }
+
+body.cc-plain-emphasis .markdown-rendered strong,
+body.cc-plain-emphasis .markdown-rendered b,
+body.cc-plain-emphasis .markdown-preview-view strong,
+body.cc-plain-emphasis .cm-s-obsidian .cm-strong,
+body.cc-plain-emphasis .markdown-rendered em,
+body.cc-plain-emphasis .markdown-rendered i,
+body.cc-plain-emphasis .markdown-preview-view em,
+body.cc-plain-emphasis .cm-s-obsidian .cm-em { color: inherit; }
 
 /* --------------------------------------------------------------------------
    App chrome — shared layout styles
@@ -389,7 +558,7 @@ input[type="checkbox"]:checked { background-color: var(--cc-coral); border-color
 .theme-light .bases-table-cell,
 .theme-light .bases-th,
 .theme-light .bases-td {
-  border-color: #bcd1c0;
+  border-color: var(--table-border-color);
 }
 
 /* Active file dot in Monokai green */
@@ -399,38 +568,36 @@ input[type="checkbox"]:checked { background-color: var(--cc-coral); border-color
   border-color: #a6e22e;
 }
 
-/* Graph (light): lines original-neutral but a bit darker, node labels use the
-   normal text color (the default --graph-text is a washed-out gray). */
-.theme-light {
-  --graph-line: rgba(var(--mono-rgb-100), 0.22);
-  --graph-text: var(--text-normal);
-}
+/* Graph: node labels use the normal text color (the default --graph-text is a
+   washed-out gray). Link/node/tag colors come from Style Settings, mapped in the
+   theme blocks above. */
+.theme-light,
+.theme-dark { --graph-text: var(--text-normal); }
 /* extended-graph reads the node-label color from the computed `color` of a probe
    div `.graph-view.color-text` (it ignores --graph-text), so force it directly. */
-.theme-light .graph-view.color-text {
-  color: var(--text-normal);
-}
+.graph-view.color-text { color: var(--text-normal); }
 
-/* Light-mode chrome contrast — on the pale mint surface the default chrome reads
-   too faint, so darken ribbon icons, tab headers, nav rows and file dots. */
+/* Light-mode chrome contrast — on the pale surface the default chrome reads too
+   faint, so darken ribbon icons, tab headers, nav rows and file dots. Hues track
+   the Background tint slider. */
 .theme-light .side-dock-ribbon-action {
-  color: #4a6b4e;
+  color: hsl(var(--cc-base-hue), 18%, 35%);
 }
 .theme-light .workspace-tab-header {
-  color: #5e7a62;
+  color: hsl(var(--cc-base-hue), 13%, 42%);
 }
 .theme-light .nav-file-title,
 .theme-light .nav-folder-title {
-  color: #44664a;
+  color: hsl(var(--cc-base-hue), 20%, 33%);
 }
 .theme-light .nav-folder-title {
   font-weight: 600;
 }
 .theme-light .nav-file-title-content::before {
-  border-color: #7d9682;
+  border-color: hsl(var(--cc-base-hue), 11%, 54%);
 }
 .theme-light .clickable-icon {
-  color: #5e7a62;
+  color: hsl(var(--cc-base-hue), 13%, 42%);
 }
 
 /* ==========================================================================

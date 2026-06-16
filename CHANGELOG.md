@@ -4,6 +4,28 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.4.0] - 2026-06-16
+
+### Added
+- **Style Settings panel** with live controls:
+  - **Background tint hue** — a single slider that rotates the entire paper
+    palette (backgrounds, text, headings) around the wheel while keeping
+    lightness and saturation fixed, so the default green can become pink,
+    purple, blue, and so on without losing the vibe. The tan accent is left
+    untouched on purpose.
+  - Layout & typography: corner radius, body font size, line height, and
+    reading line width sliders, plus "Plain bold & italic" and "Left-aligned
+    body text" toggles.
+  - Per-mode graph colors (node, link, tagged node, unresolved node) for both
+    light and dark.
+
+### Changed
+- The whole green surface palette is now derived from a single `--cc-base-hue`
+  variable via `hsl()` instead of hard-coded hex values, in both light and dark
+  modes. Default hue (132) reproduces the original look.
+- Style Settings master variables are declared at `body` scope so the plugin's
+  overrides always win.
+
 ## [1.3.0] - 2026-06-16
 
 ### Added
