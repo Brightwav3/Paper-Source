@@ -4,6 +4,36 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.5.0] - 2026-06-17
+
+### Added
+- **Full callout coverage** — every built-in callout type (`info`, `todo`,
+  `tip`, `success`, `question`, `warning`, `failure`, `danger`, `bug`,
+  `example`, `abstract`, `important`, and their aliases) now has a
+  palette-matched color instead of falling back to the default. Muted in light,
+  Monokai-leaning in dark.
+- **Journaling plugin styling** for the views used daily in the vault:
+  - **Calendar** — its `--color-*` variables mapped to the paper palette;
+    "today" in the accent, daily-note dots in the tan accent, palette hover and
+    week numbers, rounded day cells.
+  - **Dataview** — inline fields rendered as connected paper pills; error boxes
+    styled as a danger surface (tables already inherit the header/zebra style).
+  - **pretty-properties** — rounded banner image and progress bars (progress
+    already follows the accent via `--accent-h/s/l`).
+  - **better-word-count** — status-bar count promoted above the faint default.
+  - **Omnisearch** — modal matched to the command-palette surface, matches
+    highlighted in the accent.
+- **Markdown surfaces** — embeds/transclusions get an accent stripe and border;
+  images are rounded with centered captions; Mermaid diagrams pulled into the
+  palette (nodes, edges, labels).
+- **Accessibility & export**:
+  - `:focus-visible` accent ring on interactive controls for keyboard
+    navigation.
+  - `prefers-reduced-motion` support that neutralizes the theme's transitions.
+  - A `@media print` stylesheet — white page, hidden app chrome, full measure —
+    for clean PDF export.
+- Two new Style Settings toggles: **Image shadow** and **Highlight active line**.
+
 ## [1.4.0] - 2026-06-16
 
 ### Added

@@ -80,6 +80,18 @@ settings:
         type: class-toggle
         default: false
     -
+        id: cc-image-shadow
+        title: Image shadow
+        description: Add a soft drop shadow under images in reading view.
+        type: class-toggle
+        default: false
+    -
+        id: cc-active-line
+        title: Highlight active line
+        description: Tint the line the cursor is on in the editor.
+        type: class-toggle
+        default: false
+    -
         id: ps-graph-light-head
         title: Graph colors — Light mode
         type: heading
@@ -838,3 +850,261 @@ sup.footnote-ref a,
   font-weight: 500;
 }
 .tooltip .tooltip-arrow { display: none; }
+
+/* ==========================================================================
+   v1.5.0 — callout coverage, journaling plugins, markdown surfaces, a11y
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Callouts — full type coverage
+   Every built-in type gets a palette-matched color. Box structure is
+   unchanged; only the per-type --callout-color (icon + title tint + stripe)
+   is set, directly on each data-callout so it works regardless of how core
+   maps its named variables. Muted in light, Monokai-leaning in dark.
+   quote/note keep their existing colors (set earlier in the file).
+   -------------------------------------------------------------------------- */
+.theme-light .callout[data-callout="info"],
+.theme-light .callout[data-callout="abstract"],
+.theme-light .callout[data-callout="summary"],
+.theme-light .callout[data-callout="tldr"]            { --callout-color: 31, 122, 140; }
+.theme-light .callout[data-callout="todo"]            { --callout-color: 79, 125, 160; }
+.theme-light .callout[data-callout="tip"],
+.theme-light .callout[data-callout="hint"]            { --callout-color: 63, 125, 42; }
+.theme-light .callout[data-callout="success"],
+.theme-light .callout[data-callout="check"],
+.theme-light .callout[data-callout="done"]            { --callout-color: 76, 140, 84; }
+.theme-light .callout[data-callout="question"],
+.theme-light .callout[data-callout="help"],
+.theme-light .callout[data-callout="faq"]             { --callout-color: 200, 154, 58; }
+.theme-light .callout[data-callout="warning"],
+.theme-light .callout[data-callout="caution"],
+.theme-light .callout[data-callout="attention"]       { --callout-color: 176, 107, 46; }
+.theme-light .callout[data-callout="failure"],
+.theme-light .callout[data-callout="fail"],
+.theme-light .callout[data-callout="missing"]         { --callout-color: 192, 85, 42; }
+.theme-light .callout[data-callout="danger"],
+.theme-light .callout[data-callout="error"],
+.theme-light .callout[data-callout="bug"]             { --callout-color: 176, 48, 90; }
+.theme-light .callout[data-callout="example"]         { --callout-color: 122, 82, 184; }
+.theme-light .callout[data-callout="important"]       { --callout-color: 211, 154, 103; }
+
+.theme-dark .callout[data-callout="info"],
+.theme-dark .callout[data-callout="abstract"],
+.theme-dark .callout[data-callout="summary"],
+.theme-dark .callout[data-callout="tldr"]             { --callout-color: 102, 217, 239; }
+.theme-dark .callout[data-callout="todo"]             { --callout-color: 120, 170, 240; }
+.theme-dark .callout[data-callout="tip"],
+.theme-dark .callout[data-callout="hint"]             { --callout-color: 166, 226, 46; }
+.theme-dark .callout[data-callout="success"],
+.theme-dark .callout[data-callout="check"],
+.theme-dark .callout[data-callout="done"]             { --callout-color: 166, 226, 46; }
+.theme-dark .callout[data-callout="question"],
+.theme-dark .callout[data-callout="help"],
+.theme-dark .callout[data-callout="faq"]              { --callout-color: 230, 219, 116; }
+.theme-dark .callout[data-callout="warning"],
+.theme-dark .callout[data-callout="caution"],
+.theme-dark .callout[data-callout="attention"]        { --callout-color: 253, 151, 31; }
+.theme-dark .callout[data-callout="failure"],
+.theme-dark .callout[data-callout="fail"],
+.theme-dark .callout[data-callout="missing"]          { --callout-color: 249, 38, 114; }
+.theme-dark .callout[data-callout="danger"],
+.theme-dark .callout[data-callout="error"],
+.theme-dark .callout[data-callout="bug"]              { --callout-color: 249, 38, 114; }
+.theme-dark .callout[data-callout="example"]          { --callout-color: 174, 129, 255; }
+.theme-dark .callout[data-callout="important"]        { --callout-color: 211, 154, 103; }
+
+/* --------------------------------------------------------------------------
+   Calendar plugin — map its own --color-* variables to the paper palette.
+   Tokens auto-adapt per mode, so one block covers light + dark.
+   -------------------------------------------------------------------------- */
+.workspace-leaf-content[data-type="calendar"] {
+  --color-background-heading:  transparent;
+  --color-background-day:      transparent;
+  --color-background-weeknum:  transparent;
+  --color-background-weekend:  var(--background-secondary);
+  --color-dot:                 var(--cc-accent);
+  --color-arrow:               var(--text-muted);
+  --color-text-title:          var(--text-normal);
+  --color-text-heading:        var(--text-faint);
+  --color-text-day:            var(--text-normal);
+  --color-text-today:          var(--cc-coral);
+  --color-text-weeknum:        var(--text-faint);
+}
+.workspace-leaf-content[data-type="calendar"] .calendar td {
+  border-radius: var(--radius-s);
+}
+.workspace-leaf-content[data-type="calendar"] .day:hover {
+  background: var(--background-modifier-hover);
+  border-radius: var(--radius-s);
+}
+.workspace-leaf-content[data-type="calendar"] .day.today {
+  font-weight: 700;
+}
+.workspace-leaf-content[data-type="calendar"] .day.active {
+  box-shadow: inset 0 0 0 1px var(--cc-accent);
+  border-radius: var(--radius-s);
+}
+
+/* --------------------------------------------------------------------------
+   Dataview — inline fields as paper pills; tables reuse the existing
+   header + zebra styling; error box reads as a danger surface.
+   -------------------------------------------------------------------------- */
+.markdown-rendered .inline-field-key {
+  background: var(--background-secondary);
+  color: var(--text-muted);
+  border-radius: var(--radius-s) 0 0 var(--radius-s);
+  padding: 0.05em 0.5em;
+  font-size: 0.84em;
+  font-weight: 560;
+}
+.markdown-rendered .inline-field-value {
+  background: var(--cc-coral-soft);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  padding: 0.05em 0.5em;
+  font-size: 0.84em;
+}
+.markdown-rendered .inline-field-standalone-value {
+  background: var(--cc-coral-soft);
+  border-radius: var(--radius-s);
+  padding: 0.05em 0.5em;
+  font-size: 0.84em;
+}
+.dataview-error-box {
+  background: rgba(192, 85, 42, 0.08);
+  border: 1px solid rgba(192, 85, 42, 0.35);
+  border-radius: var(--radius-m);
+  color: var(--text-normal);
+}
+
+/* --------------------------------------------------------------------------
+   pretty-properties — round the banner; progress bars already follow the
+   accent via --accent-h/s/l set in the theme blocks.
+   -------------------------------------------------------------------------- */
+.banner-image img { border-radius: var(--radius-m); }
+.metadata-progress,
+.metadata-progress-wrapper { border-radius: var(--radius-s); overflow: hidden; }
+
+/* --------------------------------------------------------------------------
+   better-word-count — promote the status-bar count above the faint default.
+   -------------------------------------------------------------------------- */
+.status-bar-item.plugin-better-word-count { color: var(--text-muted); }
+
+/* --------------------------------------------------------------------------
+   Omnisearch — match the modal to the command palette surface.
+   -------------------------------------------------------------------------- */
+.omnisearch-modal {
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-l);
+}
+.omnisearch-result { border-radius: var(--radius-m); }
+.omnisearch-result-highlight,
+.omnisearch-highlight,
+.omnisearch-default-highlight {
+  background: var(--cc-coral-soft);
+  color: var(--text-normal);
+  border-radius: var(--radius-s);
+}
+
+/* --------------------------------------------------------------------------
+   Embeds / transclusions — accent stripe so embedded notes stand apart.
+   -------------------------------------------------------------------------- */
+.markdown-rendered .markdown-embed {
+  border: 1px solid var(--background-modifier-border);
+  border-inline-start: 2px solid var(--cc-accent);
+  border-radius: var(--radius-m);
+  padding-inline: 1em;
+  background: var(--background-primary-alt);
+}
+
+/* --------------------------------------------------------------------------
+   Images — rounded; centered captions; optional shadow (Style Settings).
+   -------------------------------------------------------------------------- */
+.markdown-rendered img:not(.emoji) { border-radius: var(--radius-m); }
+.markdown-rendered .image-embed { text-align: center; }
+.markdown-rendered figcaption {
+  color: var(--text-faint);
+  font-size: 0.85em;
+  text-align: center;
+  margin-top: 0.3em;
+}
+body.cc-image-shadow .markdown-rendered img:not(.emoji) {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14);
+}
+
+/* --------------------------------------------------------------------------
+   Mermaid — pull diagram nodes/edges/labels into the palette.
+   -------------------------------------------------------------------------- */
+.markdown-rendered .mermaid {
+  background: var(--background-primary-alt);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-m);
+  padding: 0.6em;
+}
+.markdown-rendered .mermaid .node rect,
+.markdown-rendered .mermaid .node circle,
+.markdown-rendered .mermaid .node polygon,
+.markdown-rendered .mermaid .node path {
+  fill: var(--background-secondary);
+  stroke: var(--cc-accent);
+}
+.markdown-rendered .mermaid .edgePath .path,
+.markdown-rendered .mermaid .flowchart-link { stroke: var(--text-muted); }
+.markdown-rendered .mermaid .nodeLabel,
+.markdown-rendered .mermaid .edgeLabel { color: var(--text-normal); }
+
+/* --------------------------------------------------------------------------
+   Editor — highlight active line (Style Settings toggle).
+   -------------------------------------------------------------------------- */
+body.cc-active-line .cm-active.cm-line {
+  background: color-mix(in oklab, var(--text-normal) 4%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   Accessibility — keyboard focus ring on interactive controls.
+   -------------------------------------------------------------------------- */
+button:focus-visible,
+.clickable-icon:focus-visible,
+.nav-file-title:focus-visible,
+.nav-folder-title:focus-visible,
+.workspace-tab-header:focus-visible,
+.menu-item:focus-visible,
+.suggestion-item:focus-visible,
+.metadata-property:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--cc-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-s);
+}
+
+/* Reduced motion — neutralize the theme's own transitions. Same selectors as
+   the transition rule above, declared later so they win without !important. */
+@media (prefers-reduced-motion: reduce) {
+  .tree-item-self,
+  .workspace-tab-header,
+  .side-dock-ribbon-action,
+  button,
+  .clickable-icon,
+  .nav-file-title-content::before {
+    transition: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Print / PDF export — clean white page, no app chrome, full measure.
+   -------------------------------------------------------------------------- */
+@media print {
+  .workspace-ribbon,
+  .workspace-split.mod-left-split,
+  .workspace-split.mod-right-split,
+  .status-bar,
+  .titlebar,
+  .workspace-tab-header-container { display: none; }
+
+  .markdown-preview-view,
+  .markdown-rendered { color: #000; background: #fff; }
+  .markdown-preview-view p,
+  .markdown-rendered p { text-align: left; }
+  .markdown-preview-sizer { max-width: none; }
+}
