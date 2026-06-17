@@ -338,6 +338,13 @@ body {
   text-align: justify;
   hyphens: auto;
 }
+/* Don't justify text inside canvas nodes — let Advanced Canvas control
+   alignment (it sets text-align on the node, which we inherit here). */
+.canvas-node .markdown-preview-view p,
+.canvas-node .markdown-rendered p {
+  text-align: inherit;
+  hyphens: manual;
+}
 .internal-link,
 .cm-hmd-internal-link {
   color: var(--cc-accent);
