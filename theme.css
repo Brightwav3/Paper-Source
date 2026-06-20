@@ -700,8 +700,6 @@ input[type="checkbox"]:checked { background-color: var(--cc-coral); border-color
   color: inherit;
   border-radius: var(--radius-s);
   padding: 0.02em 0.28em;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
 }
 
 /* --------------------------------------------------------------------------

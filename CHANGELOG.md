@@ -4,6 +4,16 @@ All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.5.1] - 2026-06-20
+
+### Fixed
+- Renamed `screenshot-light-dark.png` back to `screenshot.png` — the community
+  theme dashboard couldn't find the file referenced by the listing after the
+  earlier rename.
+- Dropped `box-decoration-break` / `-webkit-box-decoration-break` from the
+  `==highlight==` styling; only partially supported by Obsidian's bundled
+  Chromium and flagged by CSS lint.
+
 ## [1.5.0] - 2026-06-17
 
 ### Added
